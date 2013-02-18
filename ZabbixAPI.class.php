@@ -216,6 +216,15 @@ class ZabbixAPI {
             'params' => ( is_array($params) ? $params : array() ),
             'jsonrpc' => "2.0"
         );
+        
+        // Added support for filters
+        if(isset($params[0]) && is_array($params[0])) {
+            foreach($params[0] as $i => $v) {
+                    $request['params']['filter'][$i] = $v;
+            }
+
+        }
+        
         // Return our request, in JSON format
         return json_encode($request);
     }
