@@ -29,3 +29,10 @@ echo "Retrieved maximum of five hosts: ".print_r($five_hosts, true)."\n<br>";
 ZabbixAPI::query('user','update',array('userid'=>1, 'refresh'=>1000)) 
     or die('Unable to update: '.print_r(ZabbixAPI::getLastError(),true));
 echo "Updated userid 1 with refresh value of 1000!\n";
+
+// As with previous examples, fetch on hosts, but now with option to filter params in an additional array
+// in this example the ip address...
+$ip = '192.168.0.1';
+$data = ZabbixAPI::fetch_array('host', 'get', array( $filter = array('ip' => $ip), 'extendoutput'=>1, 'limit'=>10))
+	or die('Unable to update: '.print_r(ZabbixAPI::getLastError(),true));
+echo "<pre>Retrieved hosts by IP - ". $ip . ": " .print_r($data, true)."\n<br></pre>";
